@@ -219,7 +219,7 @@ ragel-$(RAGEL_VERSION).tar.gz:
 
 ragel: ragel-$(RAGEL_VERSION).tar.gz
 	$(UNPACK)
-	$(APPLY) ragel-6.8-javacodegen.patch
+#	$(APPLY) ragel-6.8-javacodegen.patch
 	$(MOVE)
 
 
