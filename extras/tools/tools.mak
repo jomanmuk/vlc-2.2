@@ -219,7 +219,7 @@ ragel-$(RAGEL_VERSION).tar.gz:
 
 ragel: ragel-$(RAGEL_VERSION).tar.gz
 	$(UNPACK)
-#	$(APPLY) ragel-6.8-javacodegen.patch
+	$(APPLY) ragel-6.8-javacodegen.patch
 	$(MOVE)
 
 
@@ -264,6 +264,25 @@ ant: apache-ant-$(ANT_VERSION).tar.bz2
 CLEAN_PKG += ant
 DISTCLEAN_PKG += apache-ant-$(ANT_VERSION).tar.bz2
 CLEAN_FILE += .ant
+
+# Protobuf Protoc
+
+protobuf-$(PROTOBUF_VERSION).tar.bz2:
+	$(call download,$(PROTOBUF_URL))
+
+protobuf: protobuf-$(PROTOBUF_VERSION).tar.bz2
+	$(UNPACK)
+	$(MOVE)
+
+.protoc: protobuf
+	(cd $< && ./configure --prefix="$(PREFIX)" --disable-shared --enable-static && $(MAKE) && $(MAKE) install)
+	(find $(PREFIX) -name 'protobuf*.pc' -exec rm -f {} \;)
+	touch $@
+
+CLEAN_PKG += protobuf
+DISTCLEAN_PKG += protobuf-$(PROTOBUF_VERSION).tar.bz2
+CLEAN_FILE += .protoc
+
 
 #
 #
